@@ -26,7 +26,7 @@ const Canvas = (props) => {
       <CurrentScore score={15} />
       { ! props.gameState.started &&
         <g>
-          <StartGame onClick={() => props.startGame()} />
+          <StartGame onClick={() => { props.startGame();  props.moveObjects() }} />
           <Title />
         </g>
       }

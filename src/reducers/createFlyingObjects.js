@@ -6,7 +6,7 @@ import {
 export default (state) => {
   if ( ! state.gameState.started) return state; // game not running
 
-  const flyingObjects = state.gameState;
+  const flyingObjects = state.gameState.flyingObjects;
   const createNewObject = (
     flyingObjects.length < maxFlyingObjects
   );

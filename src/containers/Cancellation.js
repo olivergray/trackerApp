@@ -10,12 +10,13 @@ class Application extends Component {
         cnv.style.height = `${window.innerHeight}px`;
     };
     window.onresize();
-  }     
+  }
   render() {
     return (
       <Canvas 
         gameState={this.props.gameState}
         startGame={this.props.startGame}
+        moveObjects={this.props.moveObjects}
       />
     );
   }
