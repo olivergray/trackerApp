@@ -10,7 +10,7 @@ import "./Canvas.css"
 const Canvas = (props) => {
   const gameHeight = 1200;
   const viewBox = [window.innerWidth / -2, 500 - gameHeight, window.innerWidth, gameHeight];
-  
+
   return (
     <svg
       id="cancellation-canvas"
@@ -30,14 +30,29 @@ const Canvas = (props) => {
           <Title />
         </g>
       }
-      { props.gameState.started &&
-        <g>
-          <FlyingObject position={{x: -150, y: 300}}/>
-          <FlyingObject position={{x: 150, y: -600}}/>
-        </g>
-      }
+      {props.gameState.flyingObjects.map(flyingObject => (
+        <FlyingObject
+          key={flyingObject.id}
+          position={flyingObject.position}
+        />
+      ))}
     </svg>
   );
+};
+
+Canvas.propTypes = {
+  gameState: PropTypes.shape({
+    started: PropTypes.bool.isRequired,
+    kills: PropTypes.number.isRequired,
+    flyingObjects: PropTypes.arrayOf(PropTypes.shape({
+      position: PropTypes.shape({
+        x: PropTypes.number.isRequired,
+        y: PropTypes.number.isRequired
+      }).isRequired,
+      id: PropTypes.number.isRequired,
+    })).isRequired,
+  }).isRequired,
+  startGame: PropTypes.func.isRequired,
 };
 
 export default Canvas;
