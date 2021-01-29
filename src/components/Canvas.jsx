@@ -5,16 +5,29 @@ import CurrentScore from './CurrentScore';
 import FlyingObject from './FlyingObject';
 import StartGame from './StartGame';
 import Title from './TitleCancellation';
+import { maxFlyingObjects } from '../utils/constants';
 import "./Canvas.css"
 
 const Canvas = (props) => {
   const gameHeight = 1200;
   const viewBox = [window.innerWidth / -2, 500 - gameHeight, window.innerWidth, gameHeight];
 
+  var rows = [];
+
+  for (var i = 0; i < maxFlyingObjects; i++) {
+    rows[i] = props.gameState.flyingObjects.map(flyingObject => (
+    <FlyingObject
+      key={flyingObject.id}
+      position={flyingObject.position}
+    />
+    ))
+  }
+
   return (
     <svg
       id="cancellation-canvas"
       preserveAspectRatio="xMaxYMax none"
+      onMouseMove={props.trackMouse}
       viewBox={viewBox}
     >
       <defs>
@@ -30,12 +43,7 @@ const Canvas = (props) => {
           <Title />
         </g>
       }
-      {props.gameState.flyingObjects.map(flyingObject => (
-        <FlyingObject
-          key={flyingObject.id}
-          position={flyingObject.position}
-        />
-      ))}
+      {rows}
     </svg>
   );
 };

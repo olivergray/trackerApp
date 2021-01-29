@@ -15,6 +15,7 @@ const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case MOVE_OBJECTS:
+      console.log('called')
       return moveObjects(state, action);
     case START_GAME:
       return startGame(state, initialGameState);

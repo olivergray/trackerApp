@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import Canvas from "../components/Canvas";
+import { getCanvasPosition } from '../utils/formulas';
 
 class Application extends Component {
   componentDidMount() {
@@ -9,19 +10,32 @@ class Application extends Component {
         cnv.style.width = `${window.innerWidth}px`;
         cnv.style.height = `${window.innerHeight}px`;
     };
+    const self = this;
+    setInterval(() => {
+        self.props.moveObjects(self.canvasMousePosition);
+    }, 10);
     window.onresize();
   }
+  
+  trackMouse(event) {
+    this.canvasMousePosition = getCanvasPosition(event);
+  }
+
   render() {
     return (
       <Canvas 
         gameState={this.props.gameState}
         startGame={this.props.startGame}
         moveObjects={this.props.moveObjects}
+        angle={this.props.angle}
+        trackMouse={event => (this.trackMouse(event))}
       />
     );
   }
 }
 Application.propTypes = {
+  angle: PropTypes.number.isRequired,
+  moveObjects: PropTypes.func.isRequired,
   gameState: PropTypes.shape({
     started: PropTypes.bool.isRequired,
     kills: PropTypes.number.isRequired,
